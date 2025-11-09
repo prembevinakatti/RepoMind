@@ -17,13 +17,6 @@ const RegisterPage = () => {
             <span className="text-black">MIND</span>
           </h1>
         </div>
-
-        <button
-          onClick={() => window.history.back()}
-          className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95 text-xs"
-        >
-          ← Back
-        </button>
       </nav>
 
       {/* ---------------- REGISTER CARD ---------------- */}
