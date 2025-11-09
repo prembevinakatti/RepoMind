@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";   // ✅ axios import
+import axios from "axios";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
-  const [email, setEmail]       = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
     if (!username || !email || !password) {
@@ -21,15 +21,23 @@ const RegisterPage = () => {
     setLoading(true);
 
     try {
-      const res = await api.post("/auth/register", {
-        username,
-        email,
-        password
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/repomind/auth/register",
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
       alert(res.data.message || "Registered Successfully!");
       navigate("/login");
-
     } catch (err) {
       console.log(err);
       alert(err.response?.data?.message || "Registration failed");
@@ -40,14 +48,15 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
-      
       {/* NAVBAR */}
       <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center bg-white/40 backdrop-blur-xl border-b border-white/50">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
             <Github size={14} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold"><span className="text-pink-600">REPO</span>MIND</h1>
+          <h1 className="text-2xl font-bold">
+            <span className="text-pink-600">REPO</span>MIND
+          </h1>
         </div>
       </nav>
 
@@ -62,7 +71,6 @@ const RegisterPage = () => {
         </h2>
 
         <div className="mt-6 flex flex-col gap-4">
-
           <input
             type="text"
             placeholder="Enter username"
@@ -98,7 +106,10 @@ const RegisterPage = () => {
 
         <p className="text-center mt-5 text-sm">
           Already have an account?
-          <a href="/login" className="text-pink-600 font-semibold"> Login</a>
+          <a href="/login" className="text-pink-600 font-semibold">
+            {" "}
+            Login
+          </a>
         </p>
       </motion.div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Github, ArrowRight } from "lucide-react";
-import api from "../api/axios";   // ✅ axios import
+import axios from "axios";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -18,18 +18,25 @@ const HomePage = () => {
     setLoading(true);
 
     try {
-      // ✅ Axios POST request
-      const response = await api.post("/repomind/repo/analyze", { repoUrl });
+      const response = await axios.post(
+        "http://localhost:3000/api/repomind/repo/analyze",
+        { repoUrl },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-      if (response?.data?.repo?._id) {
-        navigate(`/repo/${response.data.repo._id}`);
+      console.log("✅ Repo analyzed:", response.data);
+
+      if (response.data.success && response.data.repoId) {
+        navigate(`/repo/${response.data.repoId}`);
       } else {
-        alert("Invalid response from server.");
+        alert("Invalid response — try again.");
       }
-
     } catch (err) {
-      console.log(err);
-      alert(err.response?.data?.message || "API error — check backend!");
+      console.error(err);
+      alert(err.response?.data?.message || "Error analyzing repository.");
     }
 
     setLoading(false);
@@ -37,8 +44,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black flex flex-col">
-
-      {/* NAVBAR */}
+      {/* Navbar */}
       <nav className="w-full py-3 px-6 flex justify-between items-center backdrop-blur-xl bg-white/40 border-b border-white/50">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center shadow-md">
@@ -50,15 +56,14 @@ const HomePage = () => {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
+      {/* Main */}
       <div className="flex flex-col items-center justify-center flex-1 px-6 text-center">
-        
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl md:text-6xl font-extrabold"
         >
-          Analyze GitHub Repos  
+          Analyze GitHub Repos
           <span className="text-pink-600"> Instantly.</span>
         </motion.h1>
 
@@ -78,16 +83,17 @@ const HomePage = () => {
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className={`px-5 py-3 rounded-xl flex items-center gap-2 transition active:scale-95
-              ${loading ? "bg-gray-400" : "bg-black hover:bg-pink-600"} text-white`}
+            className={`px-5 py-3 rounded-xl flex items-center gap-2 transition active:scale-95 ${
+              loading ? "bg-gray-400" : "bg-black hover:bg-pink-600"
+            } text-white`}
           >
-            {loading ? "Analyzing..." : "Generate"} 
+            {loading ? "Analyzing..." : "Generate"}
             <ArrowRight size={18} />
           </button>
         </div>
       </div>
 
-      {/* FOOTER */}
+      {/* Footer */}
       <footer className="py-2 text-center text-gray-700 border-t bg-white/40 backdrop-blur-xl text-sm">
         © {new Date().getFullYear()} Repomind • Auto-Docs for Developers
       </footer>

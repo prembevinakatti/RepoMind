@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";   // ✅ axios import
+import axios from "axios";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail]       = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -20,11 +20,19 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await axios.post(
+        "http://localhost:3000/api/repomind/auth/login",
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
       alert("Login Successful!");
       navigate("/");
-
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
@@ -34,14 +42,15 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
-      
       {/* NAVBAR */}
       <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center bg-white/40 backdrop-blur-xl border-b border-white/50">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
             <Github size={14} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold"><span className="text-pink-600">REPO</span>MIND</h1>
+          <h1 className="text-2xl font-bold">
+            <span className="text-pink-600">REPO</span>MIND
+          </h1>
         </div>
       </nav>
 
@@ -56,7 +65,6 @@ const LoginPage = () => {
         </h2>
 
         <div className="mt-6 flex flex-col gap-4">
-
           <input
             type="email"
             placeholder="Enter email"
@@ -84,7 +92,10 @@ const LoginPage = () => {
 
         <p className="text-center mt-5 text-sm">
           Don’t have an account?
-          <a href="/register" className="text-pink-600 font-semibold"> Register</a>
+          <a href="/register" className="text-pink-600 font-semibold">
+            {" "}
+            Register
+          </a>
         </p>
       </motion.div>
     </div>
