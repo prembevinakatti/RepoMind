@@ -5,10 +5,8 @@ import { Github } from "lucide-react";
 const LoginPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
-
       {/* ---------------- SMALL NAVBAR ---------------- */}
       <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center backdrop-blur-xl bg-white/40 border-b border-white/50">
-
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center shadow-lg">
             <Github size={14} className="text-white" />
@@ -19,13 +17,6 @@ const LoginPage = () => {
             <span className="text-black">MIND</span>
           </h1>
         </div>
-
-        <button
-          onClick={() => window.history.back()}
-          className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95 text-xs"
-        >
-          ← Back
-        </button>
       </nav>
 
       {/* ---------------- LOGIN CARD ---------------- */}
@@ -35,16 +26,19 @@ const LoginPage = () => {
         transition={{ type: "spring", stiffness: 120 }}
         className="w-[90%] max-w-sm bg-white/60 backdrop-blur-xl border border-white/60 p-8 rounded-2xl shadow-xl mt-20"
       >
-        <h2 className="text-3xl font-extrabold text-pink-600 text-center">Welcome Back</h2>
+        <h2 className="text-3xl font-extrabold text-pink-600 text-center">
+          Welcome Back
+        </h2>
         <p className="text-center text-black mt-1">
           Login to continue with Repomind
         </p>
 
         {/* Inputs */}
         <div className="mt-6 flex flex-col gap-4">
-
           <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">Email</label>
+            <label className="text-sm font-medium text-gray-800 mb-1">
+              Email
+            </label>
             <input
               type="email"
               placeholder="Enter your email"
@@ -53,7 +47,9 @@ const LoginPage = () => {
           </div>
 
           <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">Password</label>
+            <label className="text-sm font-medium text-gray-800 mb-1">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
@@ -73,7 +69,10 @@ const LoginPage = () => {
         {/* Register Redirect */}
         <p className="text-center mt-5 text-sm text-gray-800">
           Don’t have an account?{" "}
-          <a href="/register" className="text-pink-600 font-semibold hover:underline">
+          <a
+            href="/register"
+            className="text-pink-600 font-semibold hover:underline"
+          >
             Register
           </a>
         </p>
@@ -84,8 +83,7 @@ const LoginPage = () => {
         <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
           <Github size={13} className="text-white" />
         </div>
-        <span>|</span>
-        © {new Date().getFullYear()} Repomind
+        <span>|</span>© {new Date().getFullYear()} Repomind
         <span>|</span>
       </footer>
     </div>
