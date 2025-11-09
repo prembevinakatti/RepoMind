@@ -11,6 +11,7 @@ const LandingPage = () => {
 
   const demoText = "https://github.com/vercel/next.js";
 
+  // Auto typing effect
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
@@ -60,10 +61,23 @@ const LandingPage = () => {
           </h1>
         </motion.div>
 
-        <div className="flex gap-4 text-xs font-medium">
-          <a className="hover:text-pink-600 transition">Home</a>
-          <a className="hover:text-pink-600 transition">How it Works</a>
-          <a className="hover:text-pink-600 transition">Contact</a>
+        {/* Navbar Buttons */}
+        <div className="flex gap-3 text-xs font-medium">
+
+          <button 
+            onClick={() => alert("Login Clicked")}
+            className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95"
+          >
+            Login
+          </button>
+
+          <button 
+            onClick={() => alert("Register Clicked")}
+            className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95"
+          >
+            Register
+          </button>
+
         </div>
       </nav>
 
@@ -88,7 +102,7 @@ const LandingPage = () => {
           Repomind turns GitHub repositories into beautiful documentation instantly.
         </motion.p>
 
-        {/* Input + Auto Button Click */}
+        {/* Input + Generate Button */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -104,8 +118,13 @@ const LandingPage = () => {
           />
 
           <button
-            className={`px-5 py-3 rounded-xl flex items-center gap-2 transition 
-            ${autoDone ? "bg-pink-600 text-white" : "bg-black text-white"}`}
+            onClick={() => {
+              setAutoDone(true);
+              setShowTree(true);
+            }}
+            className={`px-5 py-3 rounded-xl flex items-center gap-2 transition active:scale-95
+            ${autoDone ? "bg-pink-600 text-white" : "bg-black text-white"} 
+            hover:bg-pink-500`}
           >
             Generate <ArrowRight size={18} />
           </button>
