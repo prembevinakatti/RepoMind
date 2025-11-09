@@ -1,0 +1,19 @@
+import LandingPage from '@/Pages/LandingPage'
+import LoginPage from '@/Pages/LoginPage'
+import RegisterPage from '@/Pages/RegisterPage'
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+
+const AppRoutes = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<LandingPage/>}/>
+        <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
+      </Routes>
+    </div>
+  )
+}
+
+export default AppRoutes
