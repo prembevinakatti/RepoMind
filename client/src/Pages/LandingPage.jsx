@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Github } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/bg.jpg";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   const [typedText, setTypedText] = useState("");
   const [showTree, setShowTree] = useState(false);
   const [autoDone, setAutoDone] = useState(false);
@@ -65,14 +68,14 @@ const LandingPage = () => {
         <div className="flex gap-3 text-xs font-medium">
 
           <button 
-            onClick={() => alert("Login Clicked")}
+            onClick={() => navigate("/login")}   // ✅ NAVIGATE TO LOGIN
             className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95"
           >
             Login
           </button>
 
           <button 
-            onClick={() => alert("Register Clicked")}
+            onClick={() => navigate("/register")}  // ✅ NAVIGATE TO REGISTER
             className="px-4 py-1.5 rounded-full border border-black bg-white hover:bg-pink-200 transition shadow-sm active:scale-95"
           >
             Register

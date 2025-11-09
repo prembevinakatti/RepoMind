@@ -112,7 +112,9 @@ const RegisterPage = () => {
           </a>
         </p>
       </motion.div>
+      
     </div>
+    
   );
 };
 

@@ -32,7 +32,8 @@ const LoginPage = () => {
       );
 
       alert("Login Successful!");
-      navigate("/");
+      navigate("/home");   // ✅ FINAL FIXED NAVIGATION
+
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
