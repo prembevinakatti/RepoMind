@@ -80,7 +80,7 @@ const LoginPage = () => {
       </motion.div>
 
       {/* ---------------- SMALL FOOTER ---------------- */}
-      <footer className="py-2 text-center text-gray-700 border-t bg-white/40 backdrop-blur-xl w-full flex justify-center items-center gap-2 text-sm mt-10">
+      <footer className="py-2 fixed bottom-0 text-center text-gray-700 border-t bg-white/40 backdrop-blur-xl w-full flex justify-center items-center gap-2 text-sm mt-10">
         <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
           <Github size={13} className="text-white" />
         </div>

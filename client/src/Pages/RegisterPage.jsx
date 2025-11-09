@@ -5,10 +5,8 @@ import { Github } from "lucide-react";
 const RegisterPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
-
       {/* ---------------- SMALL NAVBAR ---------------- */}
       <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center backdrop-blur-xl bg-white/40 border-b border-white/50">
-
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center shadow-lg">
             <Github size={14} className="text-white" />
@@ -35,17 +33,20 @@ const RegisterPage = () => {
         transition={{ type: "spring", stiffness: 120 }}
         className="w-[90%] max-w-sm bg-white/60 backdrop-blur-xl border border-white/60 p-8 rounded-2xl shadow-xl mt-20"
       >
-        <h2 className="text-3xl font-extrabold text-pink-600 text-center">Create Account</h2>
+        <h2 className="text-3xl font-extrabold text-pink-600 text-center">
+          Create Account
+        </h2>
         <p className="text-center text-black mt-1">
           Register to continue with Repomind
         </p>
 
         {/* Inputs */}
         <div className="mt-6 flex flex-col gap-4">
-
           {/* Full Name */}
           <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">Full Name</label>
+            <label className="text-sm font-medium text-gray-800 mb-1">
+              Full Name
+            </label>
             <input
               type="text"
               placeholder="Enter your full name"
@@ -55,7 +56,9 @@ const RegisterPage = () => {
 
           {/* Email */}
           <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">Email</label>
+            <label className="text-sm font-medium text-gray-800 mb-1">
+              Email
+            </label>
             <input
               type="email"
               placeholder="Enter your email"
@@ -65,7 +68,9 @@ const RegisterPage = () => {
 
           {/* Password */}
           <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">Password</label>
+            <label className="text-sm font-medium text-gray-800 mb-1">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
@@ -95,19 +100,21 @@ const RegisterPage = () => {
         {/* Login Redirect */}
         <p className="text-center mt-5 text-sm text-gray-800">
           Already have an account?{" "}
-          <a href="/login" className="text-pink-600 font-semibold hover:underline">
+          <a
+            href="/login"
+            className="text-pink-600 font-semibold hover:underline"
+          >
             Login
           </a>
         </p>
       </motion.div>
 
       {/* ---------------- SMALL FOOTER ---------------- */}
-      <footer className="py-2 text-center text-gray-700 border-t bg-white/40 backdrop-blur-xl w-full flex justify-center items-center gap-2 text-sm mt-10">
+      <footer className="py-2 text-center absolute bottom-0 text-gray-700 border-t bg-white/40 backdrop-blur-xl w-full flex justify-center items-center gap-2 text-sm mt-10">
         <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
           <Github size={13} className="text-white" />
         </div>
-        <span>|</span>
-        © {new Date().getFullYear()} Repomind
+        <span>|</span>© {new Date().getFullYear()} Repomind
         <span>|</span>
       </footer>
     </div>
