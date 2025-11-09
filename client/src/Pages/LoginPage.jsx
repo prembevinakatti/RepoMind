@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";   // ✅ axios import
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -19,23 +20,13 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        credentials: "include", // IMPORTANT
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await api.post("/auth/login", { email, password });
 
-      const data = await response.json();
+      alert("Login Successful!");
+      navigate("/");
 
-      if (response.status === 201) {
-        alert("Login Successful!");
-        navigate("/"); // redirect to homepage
-      } else {
-        alert(data.message || "Login failed");
-      }
     } catch (err) {
-      alert("Server error");
+      alert(err.response?.data?.message || "Login failed");
     }
 
     setLoading(false);
@@ -45,12 +36,12 @@ const LoginPage = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
       
       {/* NAVBAR */}
-      <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center backdrop-blur-xl bg-white/40 border-b border-white/50">
+      <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center bg-white/40 backdrop-blur-xl border-b border-white/50">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
             <Github size={14} className="text-white" />
           </div>
-          <h1 className="text-2xl font-extrabold"><span className="text-pink-600">REPO</span>MIND</h1>
+          <h1 className="text-2xl font-bold"><span className="text-pink-600">REPO</span>MIND</h1>
         </div>
       </nav>
 
@@ -60,7 +51,9 @@ const LoginPage = () => {
         animate={{ opacity: 1, scale: 1 }}
         className="w-[90%] max-w-sm bg-white/60 backdrop-blur-xl border p-8 rounded-2xl shadow-xl mt-20"
       >
-        <h2 className="text-3xl font-extrabold text-pink-600 text-center">Welcome Back</h2>
+        <h2 className="text-3xl font-extrabold text-pink-600 text-center">
+          Welcome Back
+        </h2>
 
         <div className="mt-6 flex flex-col gap-4">
 
@@ -90,7 +83,7 @@ const LoginPage = () => {
         </div>
 
         <p className="text-center mt-5 text-sm">
-          Don’t have an account? 
+          Don’t have an account?
           <a href="/register" className="text-pink-600 font-semibold"> Register</a>
         </p>
       </motion.div>
