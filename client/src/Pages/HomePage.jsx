@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Github, ArrowRight } from "lucide-react";
+import api from "../api/axios";   // ✅ axios import
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -17,21 +18,18 @@ const HomePage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/repomind/repo/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ repoUrl }),
-      });
+      // ✅ Axios POST request
+      const response = await api.post("/repomind/repo/analyze", { repoUrl });
 
-      const data = await response.json();
-
-      if (data?.repo?._id) {
-        navigate(`/repo/${data.repo._id}`);
+      if (response?.data?.repo?._id) {
+        navigate(`/repo/${response.data.repo._id}`);
       } else {
         alert("Invalid response from server.");
       }
+
     } catch (err) {
-      alert("API error — check backend!");
+      console.log(err);
+      alert(err.response?.data?.message || "API error — check backend!");
     }
 
     setLoading(false);
