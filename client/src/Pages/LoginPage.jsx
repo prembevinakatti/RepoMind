@@ -1,91 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail]       = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading]   = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("All fields are required");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        credentials: "include", // IMPORTANT
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        alert("Login Successful!");
+        navigate("/"); // redirect to homepage
+      } else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      alert("Server error");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-white text-black">
-      {/* ---------------- SMALL NAVBAR ---------------- */}
+      
+      {/* NAVBAR */}
       <nav className="absolute top-0 left-0 w-full py-2 px-6 flex justify-between items-center backdrop-blur-xl bg-white/40 border-b border-white/50">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center shadow-lg">
+          <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
             <Github size={14} className="text-white" />
           </div>
-
-          <h1 className="text-2xl font-extrabold tracking-wide">
-            <span className="text-pink-600">REPO</span>
-            <span className="text-black">MIND</span>
-          </h1>
+          <h1 className="text-2xl font-extrabold"><span className="text-pink-600">REPO</span>MIND</h1>
         </div>
       </nav>
 
-      {/* ---------------- LOGIN CARD ---------------- */}
+      {/* CARD */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.85, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 120 }}
-        className="w-[90%] max-w-sm bg-white/60 backdrop-blur-xl border border-white/60 p-8 rounded-2xl shadow-xl mt-20"
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="w-[90%] max-w-sm bg-white/60 backdrop-blur-xl border p-8 rounded-2xl shadow-xl mt-20"
       >
-        <h2 className="text-3xl font-extrabold text-pink-600 text-center">
-          Welcome Back
-        </h2>
-        <p className="text-center text-black mt-1">
-          Login to continue with Repomind
-        </p>
+        <h2 className="text-3xl font-extrabold text-pink-600 text-center">Welcome Back</h2>
 
-        {/* Inputs */}
         <div className="mt-6 flex flex-col gap-4">
-          <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-2 rounded-xl border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
 
-          <div className="flex flex-col text-left">
-            <label className="text-sm font-medium text-gray-800 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="px-4 py-2 rounded-xl border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-          </div>
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="px-4 py-2 rounded-xl border bg-white"
+          />
 
-          {/* Login Button */}
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="px-4 py-2 rounded-xl border bg-white"
+          />
+
           <button
-            onClick={() => alert("Login clicked!")}
-            className="mt-3 w-full py-3 bg-pink-600 text-white rounded-xl hover:bg-pink-700 transition active:scale-95 flex justify-center items-center gap-2"
+            onClick={handleLogin}
+            disabled={loading}
+            className="mt-3 w-full py-3 bg-pink-600 text-white rounded-xl hover:bg-pink-700 active:scale-95"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </div>
 
-        {/* Register Redirect */}
-        <p className="text-center mt-5 text-sm text-gray-800">
-          Don’t have an account?{" "}
-          <a
-            href="/register"
-            className="text-pink-600 font-semibold hover:underline"
-          >
-            Register
-          </a>
+        <p className="text-center mt-5 text-sm">
+          Don’t have an account? 
+          <a href="/register" className="text-pink-600 font-semibold"> Register</a>
         </p>
       </motion.div>
-
-      {/* ---------------- SMALL FOOTER ---------------- */}
-      <footer className="py-2 fixed bottom-0 text-center text-gray-700 border-t bg-white/40 backdrop-blur-xl w-full flex justify-center items-center gap-2 text-sm mt-10">
-        <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
-          <Github size={13} className="text-white" />
-        </div>
-        <span>|</span>© {new Date().getFullYear()} Repomind
-        <span>|</span>
-      </footer>
     </div>
   );
 };
